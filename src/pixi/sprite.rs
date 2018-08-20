@@ -27,89 +27,46 @@ impl JsRef for Sprite {
 
 impl Positionable for Sprite {
     fn x(&self) -> f64 {
-        let x = js! { 
-            const me = @{&self.js_ref()};
-            return me.x;
-        };
-        x.try_into().unwrap()
+        js_get!(self, x)
     }
 
     fn set_x(&self, new_x: f64) {
-        js! { @(no_return)
-            const rect = @{&self.js_ref()};
-            rect.x = @{new_x};
-        };
+        js_set!(self, x, new_x);
     }
 
     fn y(&self) -> f64 {
-        let y = js! { 
-            const me = @{&self.js_ref()};
-            return me.y;
-        };
-        y.try_into().unwrap()
+        js_get!(self, y)
     }
 
     fn set_y(&self, new_y: f64) {
-        js! { @(no_return)
-            const rect = @{&self.js_ref()};
-            rect.y = @{new_y};
-        };
-    }
-
-    fn set_position(&self, x: f64, y: f64) {
-        js! {@(no_return)
-            const rect = @{&self.js_ref()};
-            rect.x = @{x};
-            rect.y = @{y};
-        };
+        js_set!(self, y, new_y);
     }
 }
 
 impl Sizable for Sprite {
     fn width(&self) -> f64 {
-        let x = js! { 
-            const me = @{&self.js_ref()};
-            return me.width;
-        };
-        x.try_into().unwrap()
+        js_get!(self, width)
     }
 
-    fn set_width(&self, width: f64) {
-        js! { @(no_return)
-            const rect = @{&self.js_ref()};
-            rect.width = @{width};
-        };
+    fn set_width(&self, new_width: f64) {
+        js_set!(self, width, new_width);
     }
 
     fn height(&self) -> f64 {
-        let y = js! { 
-            const me = @{&self.js_ref()};
-            return me.height;
-        };
-        y.try_into().unwrap()
+        js_get!(self, height)
     }
 
-    fn set_height(&self, height: f64) {
-        js! { @(no_return)
-            const rect = @{&self.js_ref()};
-            rect.height = @{height};
-        };
+    fn set_height(&self, new_height: f64) {
+        js_set!(self, height, new_height);
     }
 }
 
 impl Rotatable for Sprite {
     fn angle(&self) -> f64 {
-        let angle = js! {
-            const me = @{&self.js_ref()};
-            return me.rotation;
-        };
-        angle.try_into().unwrap()
+        js_get!(self, rotation)
     }
 
     fn set_angle(&self, angle: f64) {
-        js! { @(no_return)
-            const me = @{&self.js_ref()};
-            me.rotation = @{angle};
-        };
+        js_set!(self, rotation, angle);
     }
 }
