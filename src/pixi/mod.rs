@@ -7,20 +7,41 @@ use stdweb::web::{
     HtmlElement,
 };
 
+#[macro_export]
+macro_rules! js_get {
+    ($js_ref:expr, $var:expr) => {
+        let result = js! {
+            const js_result = @{$js_ref.js_ref()};
+            return js_result.$var;
+        };
+        result.try_into().unwrap()
+    }
+}
+
+#[macro_export]
+macro_rules! js_set {
+    ($js_ref:expr, $var:expr, $value:expr) => {
+        js! { @(no_return)
+            const this = @{js_ref.js_ref()};
+            this.$var = $value;
+        };
+    }
+}
+
 pub trait JsRef {
-    fn get_ref(&self) -> &Reference;
+    fn js_ref(&self) -> &Reference;
 }
 
 pub trait Positionable {
-    fn get_x(&self) -> f64;
-    fn get_y(&self) -> f64;
+    fn x(&self) -> f64;
+    fn y(&self) -> f64;
     fn set_x(&self, x: f64);
     fn set_y(&self, y: f64);
     fn add_x(&self, n: f64) {
-        self.set_x(self.get_x() + n);
+        self.set_x(self.x() + n);
     }
     fn add_y(&self, n: f64) {
-        self.set_y(self.get_y() + n);
+        self.set_y(self.y() + n);
     }
     fn set_position(&self, x: f64, y: f64) {
         self.set_x(x);
@@ -29,8 +50,8 @@ pub trait Positionable {
 }
 
 pub trait Sizable {
-    fn get_width(&self) -> f64;
-    fn get_height(&self) -> f64;
+    fn width(&self) -> f64;
+    fn height(&self) -> f64;
     fn set_width(&self, width: f64);
     fn set_height(&self, height: f64);
     fn set_size(&self, width: f64, height: f64) {
@@ -43,20 +64,18 @@ pub trait Sizable {
 }
 
 pub trait Rotatable {
-    fn get_angle(&self) -> f64;
+    fn angle(&self) -> f64;
     fn set_angle(&self, angle: f64);
     fn add_angle(&self, angle: f64) {
-        self.set_angle(self.get_angle() + angle);
+        self.set_angle(self.angle() + angle);
     }
 }
 
-pub struct Pixi {
-    pub js_reference: Reference,
-}
+pub struct Pixi(Reference);
 
 impl JsRef for Pixi {
-    fn get_ref(&self) -> &Reference {
-        &self.js_reference
+    fn js_ref(&self) -> &Reference {
+        &self.0
     }
 }
 
@@ -70,14 +89,12 @@ impl Pixi {
             });
         };
 
-        Self {
-            js_reference: app.into_reference().unwrap(),
-        }
+        Pixi(app.into_reference().unwrap())
     }
 
     pub fn view(&self) -> HtmlElement {
         let view = js! {
-            const app = @{&self.js_reference};
+            const app = @{&self.js_ref()};
             return app.view;
         };
         
@@ -86,22 +103,22 @@ impl Pixi {
 
     pub fn add_child(&self, child: &impl JsRef) {
         js! { @(no_return)
-            const app = @{&self.js_reference};
-            app.stage.addChild(@{&child.get_ref()});
+            const app = @{&self.js_ref()};
+            app.stage.addChild(@{&child.js_ref()});
         };
     }
 
     pub fn add_child_at(&self, child: &impl JsRef, index: u32) {
         js! { @(no_return)
-            const app = @{&self.js_reference};
-            app.stage.addChildAt(@{&child.get_ref()}, @{index});
+            const app = @{&self.js_ref()};
+            app.stage.addChildAt(@{&child.js_ref()}, @{index});
         };
     }
 
     pub fn remove_child(&self, child: &impl JsRef) {
         js! { @(no_return)
-            const app = @{&self.js_reference};
-            app.stage.removeChild(@{&child.get_ref()});
+            const app = @{&self.js_ref()};
+            app.stage.removeChild(@{&child.js_ref()});
         };
     }
 }
