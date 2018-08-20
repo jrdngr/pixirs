@@ -1,0 +1,7 @@
+[package]
+name = "pixirs"
+version = "0.1.0"
+authors = ["Jordan Grace <jordan@righteye.com>"]
+
+[dependencies]
+stdweb = "0.4.8"
