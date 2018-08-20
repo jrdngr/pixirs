@@ -3,7 +3,6 @@
 #[macro_use]
 extern crate stdweb;
 
-#[macro_use]
 pub mod pixi;
 
 fn main() {

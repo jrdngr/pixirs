@@ -1,8 +1,6 @@
 use stdweb::{ Reference };
 use stdweb::unstable::{ TryInto };
 
-#[macro_use]
-use pixi;
 use super::{ JsRef, Positionable };
 
 #[derive(Clone, PartialEq, Debug)]
