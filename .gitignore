@@ -1,2 +1,4 @@
 /target
 **/*.rs.bk
+/pixirs_derive/target
+/pixirs_derive/**/*.rs.bk

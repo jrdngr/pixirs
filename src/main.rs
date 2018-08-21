@@ -2,6 +2,8 @@
 
 #[macro_use]
 extern crate stdweb;
+#[macro_use]
+extern crate pixirs_derive;
 
 pub mod pixi;
 
@@ -25,4 +27,6 @@ fn main() {
     square.set_width(100.0);
     
     square.set_angle(45.0);
+
+    square.set_x(200.0);
 }

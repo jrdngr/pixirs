@@ -5,3 +5,4 @@ authors = ["Jordan Grace <jordan@righteye.com>"]
 
 [dependencies]
 stdweb = "0.4.8"
+pixirs_derive = { path = "./pixirs_derive" }

@@ -17,7 +17,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "pixirs"
 version = "0.1.0"
 dependencies = [
+ "pixirs_derive 0.1.0",
  "stdweb 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "pixirs_derive"
+version = "0.1.0"
+dependencies = [
+ "quote 0.6.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "syn 0.14.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
